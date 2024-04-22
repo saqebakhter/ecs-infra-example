@@ -42,7 +42,7 @@ spec:
                             },
                             "port_groups": [
                                 {
-                                    "name": "Management Network",
+                                    "name": "Management Network (User)",
                                     "policy": {
                                         "nic_teaming": {
                                             "active_nics": [
@@ -58,7 +58,7 @@ spec:
                                     "vlan_id": 0
                                 },
                                 {
-                                    "name": "VM Network",
+                                    "name": "VM Network (User)",
                                     "vlan_id": 0
                                 },
                                 {
