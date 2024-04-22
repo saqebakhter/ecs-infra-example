@@ -58,7 +58,7 @@ spec:
                                     "vlan_id": 0
                                 },
                                 {
-                                    "name": "VM Network-Name",
+                                    "name": "VM Network-2",
                                     "vlan_id": 0
                                 },
                                 {
