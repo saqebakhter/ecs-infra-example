@@ -40,7 +40,7 @@ spec:
                             },
                             "port_groups": [
                                 {
-                                    "name": "Management Network-2",
+                                    "name": "Management Network",
                                     "policy": {
                                         "nic_teaming": {
                                             "active_nics": [
