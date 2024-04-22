@@ -3,7 +3,7 @@
 apiVersion: esx.vmware.com/v1alpha1
 kind: HostConfiguration
 metadata:
-  name: vswitch-config
+  name: vswitch-config2
   namespace: esx-system
 spec:
   layertype: Incremental
