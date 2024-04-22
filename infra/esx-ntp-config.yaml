@@ -12,7 +12,23 @@ spec:
           "switches": [
             {
               "name": "vSwitch0",
-              
+              "policy": {
+              "nic_teaming": {
+                  "active_nics": [
+                      "vmnic0"
+                  ],
+                  "link_criteria_beacon": "IGNORE",
+                  "notify_switches": true,
+                  "policy": "LOADBALANCE_SRCID",
+                  "rolling_order": false,
+                  "standby_nics": []
+              },
+              "security": {
+                  "allow_promiscuous": false,
+                  "forged_transmits": false,
+                  "mac_changes": false
+                }
+              },
               "port_groups": [
                 {
                   "name": "VM Network-2",
