@@ -1,0 +1,105 @@
+
+#Example host configuration adding a new vSwitch and portgroup and assigning them to vmnic1
+apiVersion: esx.vmware.com/v1alpha1
+kind: HostConfiguration
+metadata:
+  name: vswitch-config
+  namespace: esx-system
+spec:
+  layertype: Incremental
+  profile: |
+    {
+    "esx": {
+        "network_vss": {
+        "switches": [
+            {
+            "bridge": {
+                "link_discovery_protocol": {
+                "operation": "LISTEN",
+                "protocol": "CDP"
+                },
+                "nics": [
+                "vmnic0"
+                ]
+            },
+            "name": "vSwitch0",
+            "policy": {
+                "nic_teaming": {
+                "active_nics": [
+                    "vmnic0"
+                ],
+                "link_criteria_beacon": "IGNORE",
+                "notify_switches": true,
+                "policy": "LOADBALANCE_SRCID",
+                "rolling_order": false,
+                "standby_nics": []
+                },
+                "security": {
+                "allow_promiscuous": false,
+                "forged_transmits": false,
+                "mac_changes": false
+                }
+            },
+            "port_groups": [
+                {
+                "name": "Management Network-2",
+                "policy": {
+                    "nic_teaming": {
+                    "active_nics": [
+                        "vmnic0"
+                    ],
+                    "link_criteria_beacon": "IGNORE",
+                    "notify_switches": true,
+                    "policy": "LOADBALANCE_SRCID",
+                    "rolling_order": false,
+                    "standby_nics": []
+                    }
+                },
+                "vlan_id": 0
+                },
+                {
+                "name": "VM Network-2",
+                "vlan_id": 0
+                },
+                {
+                "name": "Data VM Network",
+                "vlan_id": 10
+                }
+            ]
+            }
+        ]
+        },
+        "network": {
+        "vmknics": [
+            {
+            "device": "vmk0",
+            "nic": "vmnic0",
+            "ip": {
+                "dhcp": true,
+                "dhcp_dns": true,
+                "ipv6": {
+                "dhcp": false,
+                "auto_configuration_enabled": true,
+                "dhcp_dns": false
+                },
+                "ipv6_enabled": true
+            },
+            "net_stack_instance_key": "defaultTcpipStack",
+            "port_connection_type": "VSS_PORT_GROUP",
+            "port_group": "Management Network-2",
+            "mac_mode": "PNIC_BASED",
+            "enabled": true,
+            "enabled_services": {
+                "management": true
+            }
+            }
+        ],
+        "net_stacks": [
+            {
+            "key": "defaultTcpipStack",
+            "name": "defaultTcpipStack"
+            }
+        ]
+        }
+    }
+    }
