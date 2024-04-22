@@ -5,4 +5,5 @@ resources:
   - esx-ntp-config.yaml
   - k8s-dashboard.yaml
   - kubeseal.yaml
+  - esx-sw_pg.yml
 
