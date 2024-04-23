@@ -5,5 +5,5 @@ resources:
   - cadvisor.yaml
   - esx-ntp-config.yaml
   - kubeseal.yaml
-  - esx-sw_pg.yaml
+  # - esx-sw_pg.yaml
 
