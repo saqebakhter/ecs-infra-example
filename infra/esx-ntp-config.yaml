@@ -15,7 +15,7 @@ spec:
             "ntp_config": {
               "server": [
                 {
-                  "hostname": "0.pool.ntp.org",
+                  "hostname": "3.pool.ntp.org",
                   "command": "SERVER"
                 },
                 {
