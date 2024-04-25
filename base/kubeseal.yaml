@@ -7,23 +7,36 @@ spec:
   interval: 1h0m0s
   url: https://bitnami-labs.github.io/sealed-secrets
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: sealed-secrets
-  namespace: flux-system
+  name: podinfo
+  namespace: default
 spec:
+  interval: 10m
+  timeout: 5m
   chart:
     spec:
-      chart: sealed-secrets
+      chart: podinfo
+      version: '6.5.*'
       sourceRef:
         kind: HelmRepository
-        name: sealed-secrets
-      version: ">=1.15.0-0"
-  interval: 1h0m0s
-  releaseName: sealed-secrets-controller
-  targetNamespace: flux-system
+        name: podinfo
+      interval: 5m
+  releaseName: podinfo
   install:
-    crds: Create
+    remediation:
+      retries: 3
   upgrade:
-    crds: CreateReplace
+    remediation:
+      retries: 3
+  test:
+    enable: true
+  driftDetection:
+    mode: enabled
+    ignore:
+    - paths: ["/spec/replicas"]
+      target:
+        kind: Deployment
+  values:
+    replicaCount: 2
