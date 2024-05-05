@@ -1,0 +1,72 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: ecs-infra
+  namespace: default
+spec:
+  interval: 1m
+  url: https://github.com/saqebakhter/ecs-infra-example.git
+  ref:
+    branch: main
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: ecs-apps
+  namespace: default
+spec:
+  interval: 1m
+  url: https://github.com/saqebakhter/ecs-apps-example.git
+  ref:
+    branch: main
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: base-infra
+  namespace: default
+spec:
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: ecs-infra
+  path: ./base
+  prune: true
+  timeout: 1m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: apps-base
+  namespace: default
+spec:
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: ecs-apps
+  path: ./base
+  prune: true
+  timeout: 1m
+  patches:
+    - patch: |
+        - op: replace
+          path: /spec/className
+          value: best-effort-xsmall
+      target:
+        kind: VirtualMachine
+        name: linux-vm
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: london-apps
+  namespace: default
+spec:
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: ecs-apps
+  path: ./sites/london
+  prune: true
+  timeout: 1m
