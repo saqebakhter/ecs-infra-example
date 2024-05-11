@@ -4,7 +4,5 @@ resources:
   - k8s-dashboard.yaml
   - cadvisor.yaml
   - esx-ntp-config.yaml
-  - kubeseal.yaml
   - ww-gitops-dashboard.yaml
-  # - esx-sw_pg.yaml
 
