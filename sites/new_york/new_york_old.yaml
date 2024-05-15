@@ -38,6 +38,28 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: apps-base
+  namespace: default
+spec:
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: ecs-apps
+  path: ./base
+  prune: true
+  timeout: 1m
+  patches:
+    - patch: |
+        - op: replace
+          path: /spec/className
+          value: best-effort-xsmall
+      target:
+        kind: VirtualMachine
+        name: linux-vm
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: new-york-apps
   namespace: default
 spec:
