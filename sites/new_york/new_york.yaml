@@ -48,11 +48,3 @@ spec:
   path: ./sites/new_york
   prune: true
   timeout: 1m
-  patches:
-    - patch: |
-        - op: replace
-          path: /spec/className
-          value: best-effort-xsmall
-      target:
-        kind: VirtualMachine
-        name: linux-vm
